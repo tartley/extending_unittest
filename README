@@ -1,0 +1,85 @@
+
+Extending unittest
+==================
+
+This directory contains information about some extensions to unittest I've used
+on a Python Django project. 
+
+
+Contents
+--------
+
+The subdirs in this repo are::
+
+    talk:   Text files which I used as slide deck for my presentation
+            'extending unittest', at PyConUK 2011.
+
+    src:    The source code of the unittest extensions I was talking about.
+
+
+Known Problems
+--------------
+
+The source works for me, but is almost certainly not in any condition to work
+on your project out of the box. I copied the files from my work project, and
+haven't tried to run them on any other project, so they will almost certainly
+need some tweaking to work for you.
+
+Additionally, as mentioned during my talk, the current implementation
+of the composed test runner (which merges together all the other
+components at runtime to produce a composite test runner class) has been found
+to have severe shortfall, in that it doesn't work in conjunction with things
+like Jenkins, which use their own test runner. Consequentially, a new approach
+is needed. This is partly done in my work project, but needs lots more thought
+before anything fit for shared, public code can be produced.
+
+Having said all that, several people asked for access to the code, so here it
+is in the current rough early draft. Hopefully this might help somebody, and
+might stimulate discussion to produce something more robust and useful.
+
+
+Dependencies
+------------
+
+    Has been run on Ubuntu and Mac OSX
+    Python 2.7
+
+Python library dependencies, install using pip or easy_install:
+    termcolor
+    coverage
+
+
+Usage
+-----
+
+1) The source lives the following subdir of my project.
+
+    tests/utils/
+
+2) Activate the test runner, by adding to your Django settings::
+
+    TEST_RUNNER = 'tests.utils.testrunner.TestRunner
+
+3) Define the following environment variable to enable the various bits::
+
+  export TEST_RUNNER_OPTIONS="--quiet --readable --color --show-skip --coverage"
+
+These options can't be passed in on the command-line, because Django's
+"manage.py" does the interpretting of sys.argv, and rejects anything it doesn't
+know about. Presumably a better approach would be to produce a replacement
+'test' command, but I haven't done that.
+
+4) Run the Django tests as normal:
+
+    ./manage.py test [--verbosity=2]
+
+
+Contact
+-------
+
+Fare thee well.
+
+    Jonathan Hartley
+    tartley@tartley.com
+    @tartley
+
