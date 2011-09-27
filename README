@@ -45,6 +45,7 @@ Dependencies
     Python 2.7
 
 Python library dependencies, install using pip or easy_install:
+    Django 1.2.4
     termcolor
     coverage
 
